@@ -6,6 +6,7 @@ import android.util.Base64
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.RadioGroup
 import java.security.SecureRandom
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +39,12 @@ class MainActivity : AppCompatActivity() {
         rng.nextBytes(data)
 
         //TODO: other encodings
-        val encoded = Base64.encodeToString(data, Base64.NO_WRAP or Base64.NO_PADDING)
+        val encoded = when (findViewById<RadioGroup>(R.id.radioGroupSelectEncoding).checkedRadioButtonId) {
+            R.id.radioBase64NoPad -> Base64.encodeToString(data, Base64.NO_WRAP or Base64.NO_PADDING)
+            R.id.radioBase64 -> Base64.encodeToString(data, Base64.NO_WRAP)
+            R.id.radioHex -> data.joinToString(separator = "") { "%02x".format(it) }
+            else -> return  //TODO: error toast
+        }
 
         val resultView = findViewById<EditText>(R.id.editResult)
         resultView.setText(encoded)
