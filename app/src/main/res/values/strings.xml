@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Bottom</string>
+
+    <string name="hex">HEX</string>
+    <string name="base64">Base 64</string>
+    <string name="base64nopad">Base 64 (No Padding)</string>
+
+    <string name="clear">Clear</string>
+    <string name="generate">Generate</string>
+    <string name="copy">Copy</string>
+
+    <string name="size">Size (Bytes)</string>
+</resources>
