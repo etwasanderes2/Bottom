@@ -1,5 +1,8 @@
 package com.github.etwasanderes2
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
@@ -48,5 +51,16 @@ class MainActivity : AppCompatActivity() {
 
         val resultView = findViewById<EditText>(R.id.editResult)
         resultView.setText(encoded)
+    }
+
+    fun clear(view: View) {
+        val resultView = findViewById<EditText>(R.id.editResult)
+        resultView.setText("")
+    }
+
+    fun copy(view: View) {
+        val resultView = findViewById<EditText>(R.id.editResult)
+        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(resultView.text, resultView.text))
     }
 }
