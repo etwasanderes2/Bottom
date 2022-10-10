@@ -10,7 +10,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.RadioGroup
+import android.widget.Toast
 import java.security.SecureRandom
+
+const val MAX_SIZE = 10000
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +38,29 @@ class MainActivity : AppCompatActivity() {
     fun generate(view: View) {
         val rng = SecureRandom()
         val sizeView = findViewById<EditText>(R.id.editSize)
-        val size = sizeView.text.toString().toIntOrNull() ?: return
-        //TODO: error toast
-        //TODO: max size
+        val size = sizeView.text.toString().toIntOrNull() ?: run {
+            Toast.makeText(applicationContext, "How the fuck did you manage to enter a non-number (${sizeView.text}) into a number field?", Toast.LENGTH_LONG).show()
+            return@generate
+        }
+        if (size > MAX_SIZE) {
+            Toast.makeText(applicationContext, "Size too great! Maximum is $MAX_SIZE", Toast.LENGTH_SHORT).show()
+            return
+        }
+        if (size < 0) {
+            Toast.makeText(applicationContext, "How the fuck did you manage to enter a negative size ($size)?", Toast.LENGTH_LONG).show()
+            return
+        }
         val data = ByteArray(size)
         rng.nextBytes(data)
 
-        //TODO: other encodings
         val encoded = when (findViewById<RadioGroup>(R.id.radioGroupSelectEncoding).checkedRadioButtonId) {
             R.id.radioBase64NoPad -> Base64.encodeToString(data, Base64.NO_WRAP or Base64.NO_PADDING)
             R.id.radioBase64 -> Base64.encodeToString(data, Base64.NO_WRAP)
             R.id.radioHex -> data.joinToString(separator = "") { "%02x".format(it) }
-            else -> return  //TODO: error toast
+            else -> {
+                Toast.makeText(applicationContext, "How the fuck did you manage to check a radio button that doesn't exist?", Toast.LENGTH_LONG).show()
+                return
+            }
         }
 
         val resultView = findViewById<EditText>(R.id.editResult)
