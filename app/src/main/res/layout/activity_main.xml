@@ -13,6 +13,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="36dp"
         android:ems="10"
+        android:imeOptions="actionGo"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +33,7 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
+        android:onClick="generate"
         android:text="@string/generate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonCopy"
@@ -63,6 +65,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
+        android:clickable="false"
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
